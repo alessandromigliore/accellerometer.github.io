@@ -71,6 +71,27 @@
         document.getElementById('statusx').innerHTML = "Movimento asse x: " + a.toFixed(10);
         document.getElementById('statusy').innerHTML = "Movimento asse y: " + b.toFixed(10);
         document.getElementById('statusz').innerHTML = "Movimento asse z: " + c.toFixed(10);
+		
+		var xhttp3 = new XMLHttpRequest();
+			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/8e951f60-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
+			xhttp3.setRequestHeader('Content-Type', 'application/json');
+			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
+			
+      xhttp3.send('{"mov":' + Math.abs(a.toFixed(10)) +  "}");
+    
+      var xhttp3 = new XMLHttpRequest();
+			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/8aede950-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
+			xhttp3.setRequestHeader('Content-Type', 'application/json');
+			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
+			
+      xhttp3.send('{"mov":' + Math.abs(b.toFixed(10)) +  "}");
+
+       var xhttp3 = new XMLHttpRequest();
+			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/85b0a9f0-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
+			xhttp3.setRequestHeader('Content-Type', 'application/json');
+			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
+			
+      xhttp3.send('{"mov":' + Math.abs(c.toFixed(10)) +  "}");
 
         if (a > 1 || b > 1 || c > 1 )
           document.getElementById('movimento').innerHTML = "Mi muovo";
@@ -121,6 +142,9 @@
 			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
 			
       xhttp3.send('{"axis":' + Math.abs(sensor.z.toFixed(10)) +  "}");
+	  
+	  
+	  
 
       //document.getElementById('status').innerHTML = array[1];
       });
