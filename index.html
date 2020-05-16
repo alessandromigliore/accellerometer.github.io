@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Accelerometer Sensor</title>  
-  <h1>Accellerometer</h1>
+  <h1>Accelerometrons</h1>
   <button onclick="sensori()">Start</button>
   <br/>
   <link rel="stylesheet" href="main.css" type="text/css" media="screen, projection"
@@ -10,7 +10,7 @@
   
   <h1></h1>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Ruadhan O'Donoghue">
+  <meta name="author" content="Ruocco Giovanni">
   <meta charset="UTF-8">
 </head>
 <table id="myTable"><!--  creation of the first table -->
@@ -39,7 +39,8 @@
   <div id="mediax">Attendo la media sulle x...</div>
   <div id="mediay">Attendo la media sulle y...</div>
   <div id="mediaz">Attendo la media sulle z...</div>
-  <div id="media">Media Totale: </div>
+  <div id="media">Signal Magnitude Area: </div>
+  <div id="movement">In attesa delle misurazioni... </div>
   
 
   <script>
@@ -49,13 +50,16 @@
     var arrayx = [];
     var arrayy = [];
     var arrayz = [];
+    var a=[];
+    var b=[];
+    var c=[];
     let status = document.getElementById('status');
     
     //document.getElementById('status').innerHTML = array[9];
     
     if ( 'Accelerometer' in window ) {
       var sensor = new Accelerometer({frequency: 1});
-      var a = 0, b=0, c=0;
+     
       sensor.addEventListener('reading', () => {
       cont++;
       document.getElementById('status').innerHTML = cont;
@@ -64,89 +68,78 @@
       arrayz[cont] = sensor.z;
       if (cont !=0)
       {
-        a = arrayx[cont] - arrayx[cont-1];
-        b = arrayy[cont] - arrayy[cont-1];
-        c = arrayz[cont] - arrayz[cont-1];
+        a[cont-1] = arrayx[cont] - arrayx[cont-1];
+        b[cont-1] = arrayy[cont] - arrayy[cont-1];
+        c[cont-1] = arrayz[cont] - arrayz[cont-1];
         
-        document.getElementById('statusx').innerHTML = "Movimento asse x: " + a.toFixed(10);
-        document.getElementById('statusy').innerHTML = "Movimento asse y: " + b.toFixed(10);
-        document.getElementById('statusz').innerHTML = "Movimento asse z: " + c.toFixed(10);
-		
-		var xhttp3 = new XMLHttpRequest();
-			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/8e951f60-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
-			xhttp3.setRequestHeader('Content-Type', 'application/json');
-			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
-			
-      xhttp3.send('{"mov":' + Math.abs(a.toFixed(10)) +  "}");
-    
-      var xhttp3 = new XMLHttpRequest();
-			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/8aede950-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
-			xhttp3.setRequestHeader('Content-Type', 'application/json');
-			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
-			
-      xhttp3.send('{"mov":' + Math.abs(b.toFixed(10)) +  "}");
+        document.getElementById('statusx').innerHTML = "Movimento asse x: " + a[cont-1].toFixed(10);
+        document.getElementById('statusy').innerHTML = "Movimento asse y: " + b[cont-1].toFixed(10);
+        document.getElementById('statusz').innerHTML = "Movimento asse z: " + c[cont-1].toFixed(10);
 
-       var xhttp3 = new XMLHttpRequest();
-			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/85b0a9f0-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
-			xhttp3.setRequestHeader('Content-Type', 'application/json');
-			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
-			
-      xhttp3.send('{"mov":' + Math.abs(c.toFixed(10)) +  "}");
-
-        if (a > 1 || b > 1 || c > 1 )
+        if (a[cont-1] > 1 || b[cont-1] > 1 || c[cont-1] > 1 )
           document.getElementById('movimento').innerHTML = "Mi muovo";
         else
           document.getElementById('movimento').innerHTML = "Sto fermo";
-      }
-      var num=0;
-      var tempo = 10;
-      if (cont % tempo == 0 && cont !=0)
-      {
-        num = (cont/tempo);
-        for (var j=0,somm=0,sommx=0,sommy=0,sommz=0; j<tempo; j++)
+      
+        var num=0;
+        var tempo = 10;
+        if (cont % tempo == 0)
         {
-          sommx += arrayx[j+ (tempo*(num-1))];
-          sommy += arrayy[j+ (tempo*(num-1))];
-          sommz += arrayz[j+ (tempo*(num-1))];
+          num = (cont/tempo);
+          for (var j=0,somm=0,sommx=0,sommy=0,sommz=0; j<tempo; j++)
+          {
+            sommx += Math.abs(a[j+ (tempo*(num-1))]);
+            sommy += Math.abs(b[j+ (tempo*(num-1))]);
+            sommz += Math.abs(c[j+ (tempo*(num-1))]);
+          }
+          var SMA = Math.abs(sommx/tempo) + Math.abs(sommy/tempo) + Math.abs(sommz/tempo);
+          var trsh = 0.5;
+          document.getElementById('mediax').innerHTML = "Media sulle x: " + (sommx/tempo) + " con cont: " + cont + " con num: " + num;
+          document.getElementById('mediay').innerHTML = "Media sulle y: " + (sommy/tempo);
+          document.getElementById('mediaz').innerHTML = "Media sulle z: " + (sommz/tempo);
+          document.getElementById('media').innerHTML = "Signal Magnitude Area: " + SMA;
+
+
+          if (SMA > trsh)
+            document.getElementById('movement').innerHTML = "Mi sto muovendo";
+          
+          else
+            document.getElementById('movement').innerHTML = "Sono fermo";
+          
         }
-        document.getElementById('mediax').innerHTML = "Media sulle x: " + (Math.abs(sommx/tempo)) + " con cont: " + cont + " con num: " + num;
-        document.getElementById('mediay').innerHTML = "Media sulle y: " + (Math.abs(sommy/tempo))
-        document.getElementById('mediaz').innerHTML = "Media sulle z: " + (Math.abs(sommz/tempo))
-        document.getElementById('media').innerHTML = "Media Totale: " + (Math.abs(sommx/tempo) + Math.abs(sommy/tempo) + Math.abs(sommz/tempo));
-      }
-
-
-      
-      var table = document.getElementById("myTable");
-      table.rows[1].cells[0].innerHTML = sensor.x.toFixed(10);  //in this way I add in each cell of the row sensor's data
-      table.rows[1].cells[1].innerHTML = sensor.y.toFixed(10);
-      table.rows[1].cells[2].innerHTML = sensor.z.toFixed(10);
-      
-      var xhttp3 = new XMLHttpRequest();
+        var table = document.getElementById("myTable");
+        table.rows[1].cells[0].innerHTML = sensor.x.toFixed(10);  //in this way I add in each cell of the row sensor's data
+        table.rows[1].cells[1].innerHTML = sensor.y.toFixed(10);
+        table.rows[1].cells[2].innerHTML = sensor.z.toFixed(10);
+        
+       var xhttp3 = new XMLHttpRequest();
 			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/8e951f60-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
 			xhttp3.setRequestHeader('Content-Type', 'application/json');
 			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
 			
-      xhttp3.send('{"axis":' + Math.abs(sensor.x.toFixed(10)) +  "}");
-    
-      var xhttp3 = new XMLHttpRequest();
+        xhttp3.send('{"axis":' + sensor.x.toFixed(10) +  ', "mov":' + Math.abs(a[cont-1].toFixed(10)) +  "}");
+
+        var xhttp3 = new XMLHttpRequest();
 			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/8aede950-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
 			xhttp3.setRequestHeader('Content-Type', 'application/json');
 			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
 			
-      xhttp3.send('{"axis":' + Math.abs(sensor.y.toFixed(10)) +  "}");
+        xhttp3.send('{"axis":' + sensor.y.toFixed(10) +  ', "mov":' + Math.abs(b[cont-1].toFixed(10)) +  "}");
 
-       var xhttp3 = new XMLHttpRequest();
+        var xhttp3 = new XMLHttpRequest();
 			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/85b0a9f0-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
 			xhttp3.setRequestHeader('Content-Type', 'application/json');
 			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
 			
-      xhttp3.send('{"axis":' + Math.abs(sensor.z.toFixed(10)) +  "}");
-	  
-	  
-	  
+        xhttp3.send('{"axis":' + sensor.z.toFixed(10) +  ', "mov":' + Math.abs(c[cont-1].toFixed(10)) +  "}");
+        //document.getElementById('status').innerHTML = array[1];
+      
+      
+      
+      }
 
-      //document.getElementById('status').innerHTML = array[1];
+      
+      
       });
 
       sensor.start();
