@@ -22,3 +22,10 @@ table tr:nth-child(odd) td{
 table tr:nth-child(even) td{
     background-color: #FFF;
 }
+
+
+body {
+ background-image: url("immagineback.jpg");
+ background-color: #cccccc;
+ background-size: cover;
+}
