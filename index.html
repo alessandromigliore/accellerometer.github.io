@@ -72,14 +72,14 @@
         b[cont-1] = arrayy[cont] - arrayy[cont-1];
         c[cont-1] = arrayz[cont] - arrayz[cont-1];
         
-        document.getElementById('statusx').innerHTML = "Movimento asse x: " + a[cont-1].toFixed(10);
-        document.getElementById('statusy').innerHTML = "Movimento asse y: " + b[cont-1].toFixed(10);
-        document.getElementById('statusz').innerHTML = "Movimento asse z: " + c[cont-1].toFixed(10);
+        document.getElementById('statusx').innerHTML = "Movement x-axis: " + a[cont-1].toFixed(10);
+        document.getElementById('statusy').innerHTML = "Movement y-axis: " + b[cont-1].toFixed(10);
+        document.getElementById('statusz').innerHTML = "Movement z-axis: " + c[cont-1].toFixed(10);
 
         if (a[cont-1] > 1 || b[cont-1] > 1 || c[cont-1] > 1 )
-          document.getElementById('movimento').innerHTML = "Mi muovo";
+          document.getElementById('movimento').innerHTML = "I'm moving";
         else
-          document.getElementById('movimento').innerHTML = "Sto fermo";
+          document.getElementById('movimento').innerHTML = "I'm not moving";
       
         var num=0;
         var tempo = 10;
@@ -94,17 +94,17 @@
           }
           var SMA = Math.abs(sommx/tempo) + Math.abs(sommy/tempo) + Math.abs(sommz/tempo);
           var trsh = 0.5;
-          document.getElementById('mediax').innerHTML = "Media sulle x: " + (sommx/tempo) + " con cont: " + cont + " con num: " + num;
-          document.getElementById('mediay').innerHTML = "Media sulle y: " + (sommy/tempo);
-          document.getElementById('mediaz').innerHTML = "Media sulle z: " + (sommz/tempo);
+          document.getElementById('mediax').innerHTML = "X average: " + (sommx/tempo) + " con cont: " + cont + " con num: " + num;
+          document.getElementById('mediay').innerHTML = "Y average: " + (sommy/tempo);
+          document.getElementById('mediaz').innerHTML = "Z average: " + (sommz/tempo);
           document.getElementById('media').innerHTML = "Signal Magnitude Area: " + SMA;
 
 
           if (SMA > trsh)
-            document.getElementById('movement').innerHTML = "Mi sto muovendo";
+            document.getElementById('movement').innerHTML = "I'm moving";
           
           else
-            document.getElementById('movement').innerHTML = "Sono fermo";
+            document.getElementById('movement').innerHTML = "I'm not moving";
           
         }
         var table = document.getElementById("myTable");
