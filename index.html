@@ -30,6 +30,7 @@
 
 <body>
   <br>
+  <div id="ip">IP</div>
   <div id="status">Click start and take a look to your sensors</div>
   <div id="statusx">Movement x-axis</div>
   <div id="statusy">Movement y-axis</div>
@@ -42,7 +43,13 @@
   <div id="media">Signal Magnitude Area: </div>
   <div id="movement">Awaiting the measurements... </div>
   
+	<script type="application/javascript">
+function getIP(json) {
+document.getElementById("ip").innerHTML = json.ip;
+}
+</script>
 
+<script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
   <script>
     
     function sensori() {
