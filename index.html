@@ -29,8 +29,9 @@
 </tr>
 
 <body>
-  <br>
 
+  <br>
+		<div id="ip" style="font-size : 30px">IP</div>
   <br>
   
   <div id="status">Click start and take a look to your sensors</div>
@@ -117,7 +118,7 @@
         table.rows[1].cells[1].innerHTML = sensor.y.toFixed(10);
         table.rows[1].cells[2].innerHTML = sensor.z.toFixed(10);
         
-       var xhttp3 = new XMLHttpRequest(); //link to thingsboard
+       var xhttp3 = new XMLHttpRequest(); //link to thingsboard  
 			xhttp3.open('POST', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/8e951f60-9602-11ea-b94b-4b8eb8a38a67/timeseries/SERVER_SCOPE');
 			xhttp3.setRequestHeader('Content-Type', 'application/json');
 			xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVja2JhcnRvb3dza2k5NEBnbWFpbC5jb20iLCJzY29wZXMiOlsiVEVOQU5UX0FETUlOIl0sInVzZXJJZCI6IjhkYmYxZWMwLTk0NjItMTFlYS1iOTRiLTRiOGViOGEzOGE2NyIsImZpcnN0TmFtZSI6IkFsZXNzYW5kcm8iLCJsYXN0TmFtZSI6Ik1pZ2xpb3JlIiwiZW5hYmxlZCI6dHJ1ZSwicHJpdmFjeVBvbGljeUFjY2VwdGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiOGRhZWNiMTAtOTQ2Mi0xMWVhLWI5NGItNGI4ZWI4YTM4YTY3IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6ImNsb3VkLnRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNTg5MzAwMjczLCJleHAiOjE1OTExMDAyNzN9.Qzdly57m2QBQkveAK46IG1VfymJNX_sbdk3jejltvwHqTvsGsEq1LN4Pe8HZFjeIbAiXa0e-ccBXfO3WolF6bw');
@@ -152,6 +153,12 @@
     else status.innerHTML = 'Accelerometer not supported';
     }
   </script>
-
+<script type="application/javascript">
+    function getIP(json) {
+      document.getElementById("ip").innerHTML = "IP: "+json.ip;
+    }
+    </script>
+  
+    <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
 </body>
 </html>
